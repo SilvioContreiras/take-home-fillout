@@ -31,7 +31,7 @@ function loadFromStorage(key: string, fallback: string[]): StoredData {
     const raw = localStorage.getItem(key);
     if (raw) return JSON.parse(raw);
   } catch {
-    console.warn(`Failed to parse localStorage for key: ${key}`);
+    console.warn(`Failed to parse localStorage for key "${key}". Using fallback.`);
   }
 
   const pages = getDefaultPages(fallback);
@@ -70,13 +70,13 @@ export function usePages({
     });
   }, []);
 
-  const addAfter = useCallback((index: number) => {
-    setPages((prev) => {
-      const updated = [...prev];
-      updated.splice(index + 1, 0, { id: uuid(), title: "New" });
-      return updated;
-    });
-  }, []);
+const addAfter = useCallback((index: number, title: string = "New") => {
+  setPages((prev) => {
+    const updated = [...prev];
+    updated.splice(index + 1, 0, { id: uuid(), title });
+    return updated;
+  });
+}, []);
 
   const rename = useCallback((id: string, title: string) => {
     setPages((prev) =>
@@ -113,3 +113,4 @@ export function usePages({
     remove,
   };
 }
+

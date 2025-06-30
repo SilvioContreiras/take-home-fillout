@@ -10,7 +10,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-inter: var(--font-geist-inter);
-  --font-nunito: var(--font-geist-nunito);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -27,3 +26,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body.dragging {
+  overflow: hidden;
+}
+
+/* Add to your global styles */
+[aria-label="Open context menu"] {
+  pointer-events: auto !important;
+}
+
+.dragging [aria-label="Open context menu"] {
+  pointer-events: none !important;
+}

@@ -130,7 +130,7 @@ export const StepItem: React.FC<StepItemProps> = React.memo(
                 e.preventDefault();
                 setContextMenuOpen((prev) => !prev);
               }}
-              className="ml-2 w-4 h-4 flex flex-col justify-between items-center outline-none"
+              className="ml-2 w-4 h-4 flex flex-col justify-between items-center outline-none cursor-pointer"
               aria-label="Open context menu"
               onPointerDown={(e) => e.stopPropagation()}
             >

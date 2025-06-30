@@ -3,11 +3,11 @@ import { Nunito, Inter } from 'next/font/google';
 export const nunito = Nunito({
   subsets: ['latin'],
   variable: '--font-nunito',
-  display: 'swap',
+  // display: 'swap',
 });
 
 export const inter = Inter({ 
   subsets: ['latin'],
   variable: '--font-inter',
-  display: 'swap',
+  // display: 'swap',
 });
