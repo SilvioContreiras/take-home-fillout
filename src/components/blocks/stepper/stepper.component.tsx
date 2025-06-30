@@ -48,8 +48,6 @@ export const Stepper: React.FC<StepperProps> = ({
     useSensor(PointerSensor, {
       activationConstraint: {
         distance: 4,
-        ignore: (event: { target: HTMLElement }) =>
-          !!event.target.closest('[aria-label="Open context menu"]'),
       },
     })
   );
@@ -103,6 +101,7 @@ export const Stepper: React.FC<StepperProps> = ({
             <React.Fragment key={page.id}>
               {index > 0 && <Separator />}
               <StepItem {...getStepItemProps(page)} />
+
               {index === 1 && (
                 <>
                   <Separator />

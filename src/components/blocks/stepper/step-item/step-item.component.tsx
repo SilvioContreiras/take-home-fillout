@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { DetailsIcon, EndingIcon, InfoIcon } from "@/components/icons/pages";
 import { PageContextMenu } from "@/components/blocks/context-menu";
@@ -46,21 +46,27 @@ export const StepItem: React.FC<StepItemProps> = React.memo(
     const [isContextMenuOpen, setContextMenuOpen] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const contextMenuRef = useRef<HTMLDivElement>(null);
+    const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-    const handleClickOutside = useCallback((event: MouseEvent) => {
-      if (
-        contextMenuRef.current &&
-        !contextMenuRef.current.contains(event.target as Node)
-      ) {
-        setContextMenuOpen(false);
-      }
-    }, []);
 
     useEffect(() => {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
-    }, [handleClickOutside]);
+        const handleClickOutside = (event: MouseEvent) => {
+          const target = event.target as Node;
+      
+          if (
+            contextMenuRef.current &&
+            !contextMenuRef.current.contains(target) &&
+            menuButtonRef.current &&
+            !menuButtonRef.current.contains(target)
+          ) {
+            setContextMenuOpen(false);
+          }
+        };
+      
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+      }, []);
+      
 
     const getButtonClasses = () => {
       const base =
@@ -125,14 +131,15 @@ export const StepItem: React.FC<StepItemProps> = React.memo(
 
           {isActive && (
             <button
+            ref={menuButtonRef}
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 setContextMenuOpen((prev) => !prev);
               }}
+              onMouseDown={(e) => e.stopPropagation()}
               className="ml-2 w-4 h-4 flex flex-col justify-between items-center outline-none cursor-pointer"
               aria-label="Open context menu"
-              onPointerDown={(e) => e.stopPropagation()}
             >
               {[...Array(3)].map((_, i) => (
                 <div key={i} className="w-1 h-1 rounded-full bg-gray-400" />
